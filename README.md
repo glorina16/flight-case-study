@@ -1,4 +1,4 @@
-Flight Search Client
+Case Study
 =================
 
 Steps to start the application:
