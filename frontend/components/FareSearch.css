@@ -1,0 +1,30 @@
+.fs-container {
+    display: flex;
+}
+
+.fs-container .form-group {
+    margin-right: 8px;
+    flex-grow: 1;
+}
+
+.text{
+    float: left;
+    width: 40%;
+    margin-right: 20px;
+}
+
+.btn{
+    padding: 25px;
+}
+
+.mt{
+    margin-top: 50px;
+}
+
+.pd{
+    padding: 10px;
+}
+li:hover{
+    background: skyblue;
+    cursor: pointer;
+}
