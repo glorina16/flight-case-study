@@ -1,0 +1,4 @@
+rootProject.name = 'original-case'
+
+// include ':simple-travel-api-mock'
+// project(':simple-travel-api-mock').projectDir = new File(settingsDir, 'C:/Users/738456/simple-travel-api-mock')
