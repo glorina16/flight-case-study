@@ -3,6 +3,7 @@ package com.afkl.cases.df.service;
 import com.afkl.cases.df.common.RestTemplateTokenRequester;
 import com.afkl.cases.df.common.TokenResponse;
 
+import com.afkl.cases.df.model.Flight;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -47,6 +48,9 @@ public class FlightFareServiceImpl implements FlightFareService {
 
         final String uri = "http://localhost:8080/fares/" + origin + "/" + destination + "?currency=" + currency;
 
+        final String uri1 = "http://localhost:8080/airports/?locale=en" + "&&term=" + origin;
+        final String uri2 = "http://localhost:8080/airports/?locale=en" + "&&term=" + destination;
+
         TokenResponse token = restTemplateTokenRequester.requestAccessToken();
 
         HttpHeaders headers = new HttpHeaders();
@@ -64,4 +68,5 @@ public class FlightFareServiceImpl implements FlightFareService {
             throw new IllegalArgumentException("Error while call flight fare API");
         }
     }
+
 }

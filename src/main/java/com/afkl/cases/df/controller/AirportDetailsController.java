@@ -24,8 +24,7 @@ public class AirportDetailsController {
      * Authorization required to access the fare API.
      * </p>
      *
-     * @param locale
-     * @param term   -code, name and description as term.
+     * @param term -code, name and description as term.
      */
 
     @RequestMapping(path = "/airports")
@@ -34,7 +33,6 @@ public class AirportDetailsController {
 
         Locale language = new Locale(lang);
         return airportDetailsService.findAirport(language, term);
-
     }
 }
 

@@ -31,7 +31,7 @@ public class RestTemplateTokenRequester {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.setBasicAuth(Objects.requireNonNull(travelApiConfig.getClientId()),
-                             Objects.requireNonNull(travelApiConfig.getSecretKey()));
+                Objects.requireNonNull(travelApiConfig.getSecretKey()));
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("scope", travelApiConfig.getScope());

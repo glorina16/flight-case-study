@@ -12,7 +12,6 @@ class App extends Component{
             <FareSearch />
           </div>
           </div>
-          
       </div>
       
       );

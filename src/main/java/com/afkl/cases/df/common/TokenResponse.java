@@ -7,15 +7,21 @@ import lombok.Getter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TokenResponse {
     @JsonProperty("access_token")
-    @Getter private String accessToken;
+    @Getter
+    private String accessToken;
     @JsonProperty("token_type")
-    @Getter private String tokenType;
+    @Getter
+    private String tokenType;
     @JsonProperty("refresh_token")
-    @Getter private String refreshToken;
+    @Getter
+    private String refreshToken;
     @JsonProperty("expires_in")
-    @Getter private Integer expiresIn;
+    @Getter
+    private Integer expiresIn;
     @JsonProperty("scope")
-    @Getter private String scope;
+    @Getter
+    private String scope;
     @JsonProperty("jti")
-    @Getter private String jti;
+    @Getter
+    private String jti;
 }

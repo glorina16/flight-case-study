@@ -1,5 +1,7 @@
 package com.afkl.cases.df.service;
 
+import com.afkl.cases.df.model.Flight;
+
 /**
  * This is an interface for Flight fare.
  */

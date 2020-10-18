@@ -1,6 +1,6 @@
 package com.afkl.cases.df.controller;
 
-import com.afkl.cases.df.service.Flight;
+import com.afkl.cases.df.model.Flight;
 import com.afkl.cases.df.service.FlightFareService;
 
 import org.springframework.beans.factory.annotation.Autowired;

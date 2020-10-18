@@ -1,7 +1,6 @@
 package com.afkl.cases.df.service;
 
 import java.util.Locale;
-
 import com.afkl.cases.df.common.RestTemplateTokenRequester;
 import com.afkl.cases.df.common.TokenResponse;
 
@@ -31,19 +30,19 @@ public class AirportDetailsServiceImpl implements AirportDetailsService {
         this.restTemplateTokenRequester = restTemplateTokenRequester;
     }
 
-/**
- * {@inheritDoc}
- * <p>
- * Gets the Airport codes with the locale and term as provided in the parameter.
- * Authorization required to access the fare API.
- * </p>
- * @param locale
- * @param term
- *            -code, name and description as term.
- */
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Gets the Airport codes with the locale and term as provided in the parameter.
+     * Authorization required to access the fare API.
+     * </p>
+     *
+     * @param locale
+     * @param term   -code, name and description as term.
+     */
     @Override
     public String findAirport(Locale locale, String term) {
-        
+
         final String uri = "http://localhost:8080/airports/?locale=" + locale + "&&term=" + term;
 
         TokenResponse token = restTemplateTokenRequester.requestAccessToken();
@@ -57,7 +56,7 @@ public class AirportDetailsServiceImpl implements AirportDetailsService {
 
         ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, requestEntity, String.class);
 
-        if(response.getStatusCode().is2xxSuccessful()) {
+        if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         } else {
             throw new IllegalArgumentException("Error occurs during token generation");
