@@ -2,8 +2,8 @@ package com.afkl.cases.df.service;
 
 import java.util.Locale;
 
-import com.afkl.cases.df.RestTemplateTokenRequester;
-import com.afkl.cases.df.TokenResponse;
+import com.afkl.cases.df.common.RestTemplateTokenRequester;
+import com.afkl.cases.df.common.TokenResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ import org.springframework.web.client.RestTemplate;
 public class AirportDetailsServiceImpl implements AirportDetailsService {
 
     private RestTemplateTokenRequester restTemplateTokenRequester;
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
 
     private static final Logger log = LoggerFactory.getLogger(AirportDetailsServiceImpl.class);
 

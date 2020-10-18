@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * AirportDetails Controller Class
- *
  */
 @RestController
 public class AirportDetailsController {
@@ -19,23 +18,23 @@ public class AirportDetailsController {
     @Autowired
     private AirportDetailsService airportDetailsService;
 
-/**
- * <p>
- * Gets the Airport codes with the locale and term as provided in the parameter.
- * Authorization required to access the fare API.
- * </p>
- * @param locale
- * @param term
- *            -code, name and description as term.
- */
+    /**
+     * <p>
+     * Gets the Airport codes with the locale and term as provided in the parameter.
+     * Authorization required to access the fare API.
+     * </p>
+     *
+     * @param locale
+     * @param term   -code, name and description as term.
+     */
 
     @RequestMapping(path = "/airports")
     public String getFlightFare(@RequestParam(value = "lang", defaultValue = "en") String lang,
-                            @RequestParam("term") String term) {  
+                                @RequestParam("term") String term) {
 
-    Locale language = new Locale(lang);                           
-    return airportDetailsService.findAirport(language, term);
-     
-   }  
+        Locale language = new Locale(lang);
+        return airportDetailsService.findAirport(language, term);
+
+    }
 }
 
