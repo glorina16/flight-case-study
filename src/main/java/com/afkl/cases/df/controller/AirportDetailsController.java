@@ -2,6 +2,7 @@ package com.afkl.cases.df.controller;
 
 import java.util.Locale;
 
+import com.afkl.cases.df.model.Airport;
 import com.afkl.cases.df.service.AirportDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +26,19 @@ public class AirportDetailsController {
      * </p>
      *
      * @param term -code, name and description as term.
+     * @param page   -number of pages
+     *
+     * @return Airport object
      */
 
     @RequestMapping(path = "/airports")
-    public String getFlightFare(@RequestParam(value = "lang", defaultValue = "en") String lang,
-                                @RequestParam("term") String term) {
+    public Airport getAirportsInPagination(@RequestParam(value = "lang", defaultValue = "en") String lang,
+                                           @RequestParam("term") String term,
+                                           @RequestParam(value = "page", defaultValue = "1") int page,
+                                           @RequestParam(value = "size", defaultValue = "10") int size) {
 
         Locale language = new Locale(lang);
-        return airportDetailsService.findAirport(language, term);
+        return airportDetailsService.paginationOfAirport(language, term, page, size);
     }
 }
 

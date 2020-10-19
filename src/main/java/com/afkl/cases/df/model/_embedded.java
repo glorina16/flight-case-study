@@ -5,8 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Airport {
-    private _embedded _embedded;
+public class _embedded
+{
+    private Locations[] locations;
 
-    private Page page;
 }

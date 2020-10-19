@@ -1,5 +1,7 @@
 package com.afkl.cases.df.service;
 
+import com.afkl.cases.df.model.Airport;
+
 import java.util.Locale;
 
 /**
@@ -12,7 +14,10 @@ public interface AirportDetailsService {
      *
      * @param Locale
      * @param term   as code, name and description
+     * @param page   -number of pages
+     * @return Airport object
      */
-    String findAirport(Locale local, String term);
+
+    Airport paginationOfAirport(Locale local, String term, int page, int size );
 
 }

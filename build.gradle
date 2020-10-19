@@ -10,6 +10,8 @@ buildscript {
 plugins {
     id 'nebula.optional-base' version '3.0.3'
     id 'nebula.provided-base' version '3.0.3'
+    id "com.moowork.node" version "1.2.0"
+
 }
 
 apply plugin: 'java'
@@ -18,6 +20,8 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'nebula.provided-base'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'base'
+apply plugin: 'com.moowork.node'
 
 jar {
     baseName = 'destination-finder-client'

@@ -25,4 +25,12 @@ public class TravelApiConfig {
     @Value("${url}")
     @Getter
     private String url;
+
+    @Value("${airportBaseUrl}")
+    @Getter
+    private String airportBaseUrl;
+
+    @Value("${fareBaseUrl}")
+    @Getter
+    private String fareBaseUrl;
 }

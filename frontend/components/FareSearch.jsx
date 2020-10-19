@@ -19,7 +19,7 @@ export default class extends PureComponent {
     }
 
       getAirportList(term,airport) {        
-        fetch(`http://localhost:9000/airports?locale=en&&term=${term}`)
+        fetch(`http://localhost:9000/airports?locale=en&&term=${term}&&page=1`)
           .then(response => response.json())
           .then(data => airport == "originAirports" ? this.setState({originAirports: data._embedded.locations}): this.setState({destinationAirports: data._embedded.locations}))
       }
@@ -78,13 +78,12 @@ export default class extends PureComponent {
         return (
             <>
             <form onSubmit={this.onSearchFlights}>
-                <span className="hw-search text" data-hw-search data-hw-search-placeholders='["Origin"]'>
+                <span className="hw-search text" data-hw-search>
                     <div className="hw-search__inner">
                         <input
                             data-hw-search-input
                             className="hw-search__input" type="text"
-                            placeholder="Enter Origin"
-                    
+                            placeholder="Origin"
                             value={this.state.origin}
                             onChange={this.onOriginChange}
                         />
@@ -95,12 +94,13 @@ export default class extends PureComponent {
                     </ul>
                 </span>
                 
-                <span className="hw-search text" data-hw-search data-hw-search-placeholders='["Destination"]'>
+                <span className="hw-search text" data-hw-search>
                     <div className="hw-search__inner">
                         <input
                             data-hw-search-input
-                            className="hw-search__input" type="text"
-                            placeholder="Enter Destination"
+                            className="hw-search__input"
+                            type="text"
+                            placeholder="Destination"
                             value={this.state.destination}
                             onChange={this.onDestinationChange}
                         />
@@ -123,7 +123,6 @@ export default class extends PureComponent {
                     <h4 className="hw-h4 mt"> Price from {this.state.origin} to {this.state.destination}  is </h4> <h3 className="hw-h3">{this.state.price}EUR</h3> 
                 </span>
              }
-             
             </>
         );
     }

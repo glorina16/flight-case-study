@@ -25,7 +25,7 @@ public class AirlineFareController {
      * </p>
      *
      * @param origin      - The code of the origin.
-     * @param destination - The code of the origin.
+     * @param destination - The code of the description.
      * @return Flight
      */
 
