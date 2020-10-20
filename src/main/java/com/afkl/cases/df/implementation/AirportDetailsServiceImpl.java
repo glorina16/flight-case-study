@@ -1,4 +1,4 @@
-package com.afkl.cases.df.Implementation;
+package com.afkl.cases.df.implementation;
 
 import java.util.Locale;
 
@@ -10,22 +10,19 @@ import com.afkl.cases.df.model.Airport;
 import com.afkl.cases.df.service.AirportDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * This is an implemention class for Airport details.
+ * This is an implementation class for Airport details.
  */
 @Service
 public class AirportDetailsServiceImpl implements AirportDetailsService {
-    @Autowired
+
     private final TravelApiConfig travelApiConfig;
     private final RestTemplateTokenRequester restTemplateTokenRequester;
     private final RestTemplate restTemplate;
@@ -68,9 +65,16 @@ public class AirportDetailsServiceImpl implements AirportDetailsService {
 
         ResponseEntity<Airport> response = restTemplate.exchange(uri, HttpMethod.GET, requestEntity, new ParameterizedTypeReference<Airport>() {
         });
-
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
+        }
+        if (response.getStatusCode().is4xxClientError()) {
+            log.error("Rest service [{}] responded with bad request.", uri);
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
+        }
+        if (response.getStatusCode().is5xxServerError()) {
+            log.error("Rest service [{}] returned server error.", uri);
+            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
             throw new IllegalArgumentException("Error occurs during token generation");
         }

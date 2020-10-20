@@ -17,15 +17,16 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 public class RestTemplateTokenRequester {
-    @Autowired
-    private TravelApiConfig travelApiConfig;
 
-    public RestTemplateTokenRequester(TravelApiConfig travelApiConfig) {
+    private final TravelApiConfig travelApiConfig;
+    private final RestTemplate restTemplate;
+
+    public RestTemplateTokenRequester(TravelApiConfig travelApiConfig, RestTemplate restTemplate) {
         this.travelApiConfig = travelApiConfig;
+        this.restTemplate = restTemplate;
     }
 
     public TokenResponse requestAccessToken() {
-        RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);

@@ -61,10 +61,10 @@ class AirportsList extends React.Component {
 
         return (
             <>
-                <div class="hw-block hw-block--px hw-block--pt hw-block--pb hw-background-color-primary-lighter">
-                  <label class="hw-label">
+                <div className="hw-block hw-block--px hw-block--pt hw-block--pb hw-background-color-primary-lighter">
+                  <label className="hw-label">
                     Search Airport
-                    <input class="hw-input hw-input--white" value={this.state.searchTerm} type="search" placeholder="Search"  onChange={(e)=>this.getDetails(e)}/>
+                    <input className="hw-input hw-input--white" value={this.state.searchTerm} type="search" placeholder="Search"  onChange={(e)=>this.getDetails(e)}/>
                   </label>
                 </div>
                 <div>

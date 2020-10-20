@@ -1,4 +1,4 @@
-package com.afkl.cases.df.Implementation;
+package com.afkl.cases.df.implementation;
 
 import com.afkl.cases.df.common.RestTemplateTokenRequester;
 import com.afkl.cases.df.common.TokenResponse;
@@ -8,26 +8,22 @@ import com.afkl.cases.df.model.Flight;
 import com.afkl.cases.df.service.FlightFareService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * This is an implemention class for Flight fares.
+ * This is an implementation class for Flight fares.
  */
 
 @Service
 public class FlightFareServiceImpl implements FlightFareService {
 
-    @Autowired
     private final TravelApiConfig travelApiConfig;
     private final RestTemplateTokenRequester restTemplateTokenRequester;
-    private RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
 
     private static final Logger log = LoggerFactory.getLogger(FlightFareServiceImpl.class);
 
@@ -68,9 +64,16 @@ public class FlightFareServiceImpl implements FlightFareService {
 
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
+        }
+        if (response.getStatusCode().is4xxClientError()) {
+            log.error("Rest service [{}] responded with bad request.", uri);
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
+        }
+        if (response.getStatusCode().is5xxServerError()) {
+            log.error("Rest service [{}] returned server error.", uri);
+            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
-            throw new IllegalArgumentException("Error while call flight fare API");
+            throw new IllegalArgumentException("Error occurs during token generation");
         }
     }
-
 }
