@@ -3,18 +3,23 @@ package com.afkl.cases.df.controller;
 import com.afkl.cases.df.common.RestTemplateTokenRequester;
 import com.afkl.cases.df.common.TokenResponse;
 import com.afkl.cases.df.config.TravelApiConfig;
-import com.afkl.cases.df.implementation.FlightFareServiceImpl;
-import com.afkl.cases.df.model.Currency;
-import com.afkl.cases.df.model.Flight;
+import com.afkl.cases.df.implementation.AirportDetailsServiceImpl;
+import com.afkl.cases.df.model.Airport;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.*;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockitoAnnotations;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.File;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -22,9 +27,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FlightFareServiceImplTest {
+public class AirportDetailsServiceImplTest {
 
-    private FlightFareServiceImpl flightFareServiceImpl;
+    private AirportDetailsServiceImpl airportDetailsServiceImpl;
 
     ResponseEntity responseEntity = mock(ResponseEntity.class);
 
@@ -34,29 +39,26 @@ public class FlightFareServiceImplTest {
     }
 
     @Test
-    public void should_get_flight_fare() throws Exception {
+    public void should_get_airport_details() throws Exception {
         TravelApiConfig travelApiConfig = mock(TravelApiConfig.class);
         RestTemplate restTemplate = mock(RestTemplate.class);
         RestTemplateTokenRequester restTemplateTokenRequester = mock(RestTemplateTokenRequester.class);
 
-        when(travelApiConfig.getFareBaseUrl()).thenReturn("http://localhost:8080/fares/");
+        when(travelApiConfig.getFareBaseUrl()).thenReturn("http://localhost:8080/airports/?locale=");
         when(restTemplateTokenRequester.requestAccessToken()).thenReturn(new TokenResponse("123456", "bearer", "1234567",299, "read","mock"));
 
-        flightFareServiceImpl = new FlightFareServiceImpl(restTemplate, restTemplateTokenRequester, travelApiConfig);
+        airportDetailsServiceImpl = new AirportDetailsServiceImpl(restTemplate, restTemplateTokenRequester, travelApiConfig);
+        File file = new File(getClass().getResource("/Airport.json").toURI());
+        ObjectMapper objectMapper = new ObjectMapper();
+        Airport airports = objectMapper.readValue(file, Airport.class);
 
-        Flight flight = new Flight();
-        flight.setOrigin("BBI");
-        flight.setDestination("DEL");
-        flight.setCurrency(Currency.EUR);
-        flight.setAmount(342.76);
-
-        ResponseEntity<Flight> responseEntity = new ResponseEntity<>(new Flight("BBI", "DEL", Currency.EUR, 342.76), HttpStatus.OK);
+        ResponseEntity<Airport> responseEntity = new ResponseEntity<>(airports, HttpStatus.OK);
 
         when(restTemplate.exchange(
                 anyString(),
                 any(HttpMethod.class),
-                ArgumentMatchers.<HttpEntity<String>> any(), ArgumentMatchers.<Class<Flight>> any())).thenReturn(responseEntity);
-        Flight res = flightFareServiceImpl.findFlightsFare("BBI", "DEL","EUR");
+                ArgumentMatchers.<HttpEntity<String>> any(), any(ParameterizedTypeReference.class))).thenReturn(responseEntity);
+        Airport res = airportDetailsServiceImpl.paginationOfAirport(Locale.ENGLISH, "BBI",1, 2);
         Assert.assertEquals(res, responseEntity.getBody());
     }
 
@@ -66,18 +68,16 @@ public class FlightFareServiceImplTest {
         RestTemplate restTemplate = mock(RestTemplate.class);
         RestTemplateTokenRequester restTemplateTokenRequester = mock(RestTemplateTokenRequester.class);
 
-        when(travelApiConfig.getFareBaseUrl()).thenReturn("http://localhost:8080/fares/");
+        when(travelApiConfig.getFareBaseUrl()).thenReturn("http://localhost:8080/airports/?locale=");
         when(restTemplateTokenRequester.requestAccessToken()).thenReturn(new TokenResponse("123456", "bearer", "1234567",299, "read","mock"));
 
-        flightFareServiceImpl = new FlightFareServiceImpl(restTemplate, restTemplateTokenRequester, travelApiConfig);
+        airportDetailsServiceImpl = new AirportDetailsServiceImpl(restTemplate, restTemplateTokenRequester, travelApiConfig);
 
         when(restTemplate.exchange(
                 anyString(),
                 any(HttpMethod.class),
-                ArgumentMatchers.<HttpEntity<String>> any(), ArgumentMatchers.<Class<Flight>> any())).thenThrow(new RuntimeException("Airport fare mock service down.."));
+                ArgumentMatchers.<HttpEntity<String>> any(), any(ParameterizedTypeReference.class))).thenThrow(new RuntimeException("Airport mock service down.."));
 
-        assertThrows(RuntimeException.class, () -> flightFareServiceImpl.findFlightsFare("BBI", "DEL","EUR"), "Error thrown by Airport mock service");
+        assertThrows(RuntimeException.class, () -> airportDetailsServiceImpl.paginationOfAirport(Locale.ENGLISH, "BBI",1, 2), "Error thrown by Airport mock service");
     }
-
-
 }

@@ -1,0 +1,48 @@
+{
+  "_embedded": {
+    "locations": [
+      {
+        "parent": {
+          "code": "BBI",
+          "name": "Bhubaneswar",
+          "coordinates": {
+            "latitude": 20.2425,
+            "longitude": 85.8175
+          },
+          "description": "Bhubaneswar (BBI)"
+        },
+        "code": "BBI",
+        "name": "Biju Patnaik Airport",
+        "coordinates": {
+          "latitude": 20.24361,
+          "longitude": 85.82
+        },
+        "description": "Bhubaneswar - Biju Patnaik Airport (BBI), India"
+      },
+      {
+        "parent": {
+          "code": "HIB",
+          "name": "Chisholm",
+          "coordinates": {
+            "latitude": 47.48083,
+            "longitude": -92.86472
+          },
+          "description": "Chisholm (HIB)"
+        },
+        "code": "HIB",
+        "name": "Chisholm-Hibbing",
+        "coordinates": {
+          "latitude": 47.38861,
+          "longitude": -92.83861
+        },
+        "description": "Chisholm - Chisholm-Hibbing (HIB), USA"
+      }
+    ]
+  },
+  "page": {
+    "number": 1,
+    "size": 2,
+    "totalPages": 1,
+    "totalElements": 2
+  }
+}
