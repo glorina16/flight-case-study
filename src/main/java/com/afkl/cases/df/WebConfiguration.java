@@ -7,14 +7,12 @@ import org.springframework.web.servlet.config.annotation.*;
 @EnableWebMvc
 public class WebConfiguration implements WebMvcConfigurer {
 
+    private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
+            "classpath:/src/main/resources/static", "classpath:/resources/static",
+            "classpath:/resources/"};
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/index.html").addResourceLocations("classpath:/static/index.html");
+        registry.addResourceHandler("/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
     }
-
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("travel");
-    }
-
 }

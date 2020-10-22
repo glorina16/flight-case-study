@@ -3,6 +3,7 @@
 **/build
 **/.gradle
 /MANIFEST.MF
+/bundle
 
 # Compiled files
 *.class
